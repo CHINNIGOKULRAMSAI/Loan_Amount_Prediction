@@ -6,5 +6,6 @@ seaborn
 scikit-learn
 xgboost
 catboost
+flask
 
 -e .
