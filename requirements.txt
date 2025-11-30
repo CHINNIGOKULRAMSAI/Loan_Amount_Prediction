@@ -6,8 +6,11 @@ seaborn
 scikit-learn
 xgboost
 catboost
-flask
+Flask
 Flask-SQLAlchemy
 gunicorn
 shap
+joblib
+SQLAlchemy
+email_validator
 -e .
