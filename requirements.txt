@@ -8,5 +8,6 @@ xgboost
 catboost
 flask
 Flask-SQLAlchemy
+gunicorn
 
 -e .
