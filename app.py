@@ -1,9 +1,6 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from models import db,User
 import os
-import sys
-import pandas as pd
-import numpy as np
 
 import smtplib
 from email.message import EmailMessage
@@ -15,14 +12,14 @@ app = application
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SECRET_KEY'] = 'your_secret_key_here'
-db.init_app(app)
+with app.app_context():
+    db.init_app(app)
 
-# email configuration for gmail
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # fixed typo
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'chinnigokul43@gmail.com'
-app.config['MAIL_PASSWORD'] = 'ayuxdlrhgbmehvpw'
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
 @app.route('/')
 def index():
