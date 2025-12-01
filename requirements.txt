@@ -9,3 +9,6 @@ catboost
 xgboost
 matplotlib
 seaborn
+shap
+email-validator
+email.message
