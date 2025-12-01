@@ -6,3 +6,6 @@ numpy
 scikit-learn
 joblib
 catboost
+xgboost
+matplotlib
+seaborn
