@@ -11,25 +11,19 @@ from models import db, User
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 
 
-# ------------ APP & CONFIG ------------
-
 app = Flask(__name__)
 
-# DB: use DATABASE_URL if provided (Render/Postgres), otherwise local SQLite
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
-    "DATABASE_URL", "sqlite:///app.db"
-)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
+
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-# Secret key (DO NOT hard-code in production – set in Render env vars)
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-secret-key")
+app.config["SECRET_KEY"] = "SECRET_KEY"
 
-# Mail config – credentials from environment variables
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
-app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
+app.config["MAIL_USERNAME"] = 'chinnigokul43@gmail.com'
+app.config["MAIL_PASSWORD"] = 'ayuxdlrhgbmehvpw'
 
 db.init_app(app)
 
@@ -37,16 +31,9 @@ with app.app_context():
     db.create_all()
 
 
-# ------------ HELPERS ------------
-
 def send_email(subject, recipient, body):
     username = app.config.get("MAIL_USERNAME")
     password = app.config.get("MAIL_PASSWORD")
-
-    # In Render, if you don’t set these env vars, just skip email
-    if not username or not password:
-        app.logger.warning("MAIL_USERNAME or MAIL_PASSWORD not set; skipping email.")
-        return
 
     msg = EmailMessage()
     msg["Subject"] = subject
@@ -136,8 +123,7 @@ def predict_datapoint():
             input_summary=None,
             explanation=None,
         )
-
-    # POST – run prediction
+    
     data = CustomData(
         loan_id=request.form.get("loan_id"),
         no_of_dependents=request.form.get("no_of_dependents"),
@@ -224,8 +210,5 @@ def api_predict():
     )
 
 
-# ------------ ENTRYPOINT FOR RENDER ------------
-
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", debug=True)

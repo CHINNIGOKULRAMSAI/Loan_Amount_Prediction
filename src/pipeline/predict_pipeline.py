@@ -7,7 +7,6 @@ from src.exception import CustomException
 from src.logger import logging
 from src.utils import load_object
 
-# ---------- Paths & Caching ----------
 
 MODEL_PATH = os.path.join("artifacts", "model.pkl")
 PREPROCESSOR_PATH = os.path.join("artifacts", "preprocessor.pkl")
@@ -40,7 +39,7 @@ def get_preprocessor():
     return _preprocessor
 
 
-# ---------- Prediction Pipeline ----------
+# Prediction Pipeline
 
 class PredictPipeline:
     def __init__(self):
@@ -84,7 +83,7 @@ class PredictPipeline:
             raise CustomException(e, sys)
 
 
-# ---------- Input Data Wrapper ----------
+# Input Data Wrapper
 
 class CustomData:
     def __init__(
